@@ -2,5 +2,5 @@
 
 # Overview
 
-*Purpose:* managing IoT devices in a smart home environment.
+*Purpose:* managing IoT devices in a smart home environment.  
 *Target Audience:* Smarthome residents
