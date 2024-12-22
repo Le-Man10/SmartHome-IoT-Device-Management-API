@@ -7,15 +7,17 @@
 **Version:**v1  
 
 # Authentication  
-**Authentication type:**JWT  
+**Authentication type:** JWT  
+  
 **Purpose for chosen Authentication type:** offers token-based, stateless authentication. This will work well with the REST API.  
+  
 **Permissions**  
  - The user can register new devices, view all devices, Control the devices, update device information, delete device information and check device status.  
 # Endpoint summary and details
 **device Endpoints**  
 1. Device Registration with examples  
 Endpoint: POST/devices  
-
+Description: Retrieve all device information
 ```json
 {
     "deviceId": "device001",
@@ -24,6 +26,7 @@ Endpoint: POST/devices
     "location": "Living Room",
     "status": "off"
 }  
+```
 
 ```json  
 {
@@ -33,9 +36,11 @@ Endpoint: POST/devices
     "location": "Hallway",
     "status": "off"
 }  
+```
 2. Device Control with examples
 
-Endpoint: POST/devices/{deviceId}/control
+**Endpoint:** POST/devices/{deviceId}/control
+**Description:** Send control commmands to the devices
 
 ```json
 {
@@ -44,7 +49,7 @@ Endpoint: POST/devices/{deviceId}/control
         "brightness": 75
     }
 }
-
+```
 
 ```json
 {
@@ -53,8 +58,11 @@ Endpoint: POST/devices/{deviceId}/control
         "temperature": 22
     }
 }
+```
 3. Status Updates
-Endpoint: POST/devices/{deviceId}/status
+**Endpoint:** POST/devices/{deviceId}/status
+**Description:** update the status of a specific device
+```json
 Request Body Example 1
 
 {
@@ -65,9 +73,358 @@ Request Body Example 2
 {
     "status": "off",
     "timestamp": "2024-06-14T11:00:00Z"
-}  
+}
+```
+5. Device Query
+**Endpoint:** GET/devices/{deviceId}  
+**Description:** Retrieve information on a specific device 
+```json
+Example Response 1
+{
+    "deviceId": "device001",
+    "deviceType": "light",
+    "deviceName": "Living Room Light",
+    "location": "Living Room",
+    "status": "on"
+}
+Example Response 2
+{
+    "deviceId": "device002",
+    "deviceType": "thermostat",
+    "deviceName": "Main Thermostat",
+    "location": "Hallway",
+    "status": "off"
+}
+```
+6. Device List Query
+**Endpoint:** GET/devices.  
+**Description:** Retrieve all devices.  
+```json
+Example Response
+[
+    {
+        "deviceId": "device001",
+        "deviceType": "light",
+        "deviceName": "Living Room Light",
+        "location": "Living Room",
+        "status": "on"
+    },
+    {
+        "deviceId": "device002",
+        "deviceType": "thermostat",
+        "deviceName": "Main Thermostat",
+        "location": "Hallway",
+        "status": "off"
+    }
+]
+```
+7. User Profile Query
+**Endpoint:** GET/users/{username}  
+**Description:** Retrieves user details. 
+```json 
+Example Response 1
+{
+    "username": "john_doe",
+    "email": "john@example.com",
+    "registeredDevices": ["device001"]
+}
+Example Response 2
+{
+    "username": "jane_smith",
+    "email": "jane@example.com",
+    "registeredDevices": ["device002"]
+}
+```
+8. Update Device Information
+**Endpoint:** PUT/devices/{deviceId}  
+**Description:** Make edits to existing information of a specific device  
+```json
+Request Body Example 1
+{
+    "deviceName": "Living Room Main Light",
+    "location": "Living Room",
+    "status": "off"
+}
+Request Body Example 2
+{
+    "deviceName": "Hallway Thermostat",
+    "location": "Hallway",
+    "status": "on"
+}
+```
+ 9. Device Registration with Invalid Data
+
+ **Endpoint:** POST/devices  
+ **Description:** Adding new device information that is not enough of an invalid datatype.  
+ ```json
+
+ Request Body Example 1 (Missing Fields)
+
+ 
+{
+    "deviceId": "device003",
+    "deviceType": "camera"
+    // Missing deviceName, location, and status
+}
+
+ Request Body Example 2 (Invalid Data Types)
+{
+    "deviceId": 1003,  // Should be a string
+    "deviceType": "sensor",
+    "deviceName": "Garden Sensor",
+    "location": "Garden",
+    "status": true  // Should be a string ("on" or "off")
+}
+```
+ 10. Unauthorized Device Control Attempt
+
+ **Endpoint:** POST/devices/{deviceId}/control.  
+ **Description:** Sending unauthorized control commands
+```json
+ Request Body Example
+ 
+{
+    "command": "turn_off",
+    "parameters": {}
+}
+ Response Example
+{
+    "error": "Unauthorized",
+    "message": "User does not have permission to control this device."
+}
+```
+ 11. Device Status Update with Invalid Timestamp
+
+ Endpoint: POST/devices/{deviceId}/status
+```json
+ Request Body Example
+{
+    "status": "on",
+    "timestamp": "invalid-timestamp"
+}
+ Response Example
+{
+    "error": "Invalid data",
+    "message": "Timestamp is not in the correct format."
+}
+```
+14. Device Deletion
+
+ Endpoint: DELETE/devices/{deviceId}
+
+ Example Request
+ 
+// No body required
+ Example Response
+
+```json
+{
+    "message": "Device device001 successfully deleted."
+}
+```
+ 15. Retrieve Device Status History
+
+ Endpoint: GET /devices/{deviceId}/status-history
+
+ Example Response
+ ```json
+[
+    {
+        "status": "off",
+        "timestamp": "2024-06-14T09:00:00Z"
+    },
+    {
+        "status": "on",
+        "timestamp": "2024-06-14T10:00:00Z"
+    },
+    {
+        "status": "off",
+        "timestamp": "2024-06-14T11:00:00Z"
+    }
+]
+```
+ 16. Bulk Device Registration
+
+ Endpoint: POST/devices/bulk
+
+ Request Body Example  
+```json
+[
+    {
+        "deviceId": "device004",
+        "deviceType": "light",
+        "deviceName": "Kitchen Light",
+        "location": "Kitchen",
+        "status": "off"
+    },
+    {
+        "deviceId": "device005",
+        "deviceType": "camera",
+        "deviceName": "Front Door Camera",
+        "location": "Front Door",
+        "status": "on"
+    }
+]
+```
+ Example Response
+```json
+
+{
+    "message": "Bulk device registration successful.",
+    "registeredDevices": ["device004", "device005"]
+}
+```
+ 17. Device Control with Invalid Command
+
+ Endpoint: POST/devices/{deviceId}/control
+
+ Request Body Example
+```json
+{
+    "command": "invalid_command",
+    "parameters": {}
+}
+```
+ Response Example
+```json
+
+{
+    "error": "Bad Request",
+    "message": "Invalid control command."
+}
+```
+20. Device Control with Missing Parameters
+
+ Endpoint: POST/devices/{deviceId}/control
+
+ Request Body Example
+ ```json
+{
+    "command": "set_temperature"
+    // Missing "parameters" field
+}
+```
+ Response Example
+```json
+
+{
+    "error": "Bad Request",
+    "message": "Parameters are required for this command."
+}
+```
 
 **users endpoint**
  
+User Registration Endpoint: POST/users/register
+Request Body Example 1
+```json
+{
+    "username": "john_doe",
+    "password": "SecurePass123",
+    "email": "john@example.com"
+}
+```
+Request Body Example 2
+```json
+{
+    "username": "jane_smith",
+    "password": "AnotherPass456",
+    "email": "jane@example.com"
+}
+```
+User Login Endpoint: POST/users/login
 
+Request Body Example 1
+```json
+{
+    "username": "john_doe",
+    "password": "SecurePass123"
+}
+```
+Request Body Example 2
+```json
+{
+    "username": "jane_smith",
+    "password": "AnotherPass456"
+}
+```
+ 12. User Registration with Duplicate Username
 
+ Endpoint: POST/users/register
+
+ Request Body Example
+```json
+{
+    "username": "john_doe",
+    "password": "NewSecurePass789",
+    "email": "newjohn@example.com"
+}
+```
+ Response Example
+```json
+ {
+    "error": "Conflict",
+    "message": "Username already exists."
+}
+```
+ 13. User Login with Incorrect Password
+
+ Endpoint: POST/users/login
+
+ Request Body Example
+```json
+
+{
+    "username": "john_doe",
+    "password": "WrongPass123"
+}
+```
+ Response Example
+ ```json
+{
+    "error": "Unauthorized",
+    "message": "Incorrect username or password."
+}
+```
+18. Retrieve All Devices for a User
+
+ Endpoint: GET/users/{username}/devices
+
+ Example Response
+```json
+
+[
+    {
+        "deviceId": "device001",
+        "deviceType": "light",
+        "deviceName": "Living Room Light",
+        "location": "Living Room",
+        "status": "on"
+    },
+    {
+        "deviceId": "device003",
+        "deviceType": "camera",
+        "deviceName": "Front Yard Camera",
+        "location": "Front Yard",
+        "status": "off"
+    }
+]
+```
+
+ 19. Update User Profile Information
+
+ Endpoint: PUT/users/{username}
+
+ Request Body Example
+```json 
+{
+    "email": "newemail@example.com",
+    "password": "NewSecurePass789"
+}
+```
+ Example Response
+ ```json
+{
+    "message": "User profile updated successfully."
+}
+```
