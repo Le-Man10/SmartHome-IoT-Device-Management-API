@@ -450,6 +450,7 @@ Request Body Example 2
 }
 ```
 **Types of errors and their meaning**  
+  
 **Unauthauthorized(401):** invalid or missing token.  
 **Bad Request(400):** Invalid input or missing required fields.  
 
