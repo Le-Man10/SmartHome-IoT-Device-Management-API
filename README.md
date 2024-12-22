@@ -453,7 +453,7 @@ Request Body Example 2
   
 **Unauthauthorized(401):** invalid or missing token.  
 **Bad Request(400):** Invalid input or missing required fields.  
-
+**Conflict(409):** A conflict occurred with the current state of the resource (e.g., duplicate resource).
 **Not Found(404):** Resource not found.  
 
 **Internal Server Error(500):** Unexpected server error.  
