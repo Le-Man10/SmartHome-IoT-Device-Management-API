@@ -2,7 +2,7 @@
 
 # Overview
 
-**Purpose:** managing IoT devices in a smart home environment.  
+**Purpose:** facilitate the managing of IoT devices in a smart home environment.  
 **Target Audience:** Smarthome residents  
 **Version:** v1  
 
@@ -438,5 +438,39 @@ Request Body Example 2
  ```json
 {
     "message": "User profile updated successfully."
+}
+```
+
+# Error Handling
+**Error handling format**
+```json
+ {
+    "error": "string",
+    "message": "String"
+}
+```
+**Types of errors and their meaning**  
+**Unauthauthorized(401):** invalid or missing token.  
+**Bad Request(400):** Invalid input or missing required fields.  
+
+**Not Found(404):** Resource not found.  
+
+**Internal Server Error(500):** Unexpected server error.  
+
+# Versioning
+
+**Strategy:** URI-based versioning (/v1).  
+
+# Rate Limiting
+
+**Limit:** 100 requests per minute.  
+
+**Response When Exceeded:**
+
+429 Too Many Requests:
+```json
+{
+    "error": "Too many requests",
+    "message": "Rate limit exceeded. Try again later."
 }
 ```
