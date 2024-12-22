@@ -4,7 +4,7 @@
 
 **Purpose:** managing IoT devices in a smart home environment.  
 **Target Audience:** Smarthome residents  
-**Version:**v1  
+**Version:** v1  
 
 # Authentication  
 **Authentication type:** JWT  
