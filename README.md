@@ -16,8 +16,7 @@
 # Endpoint summary and details
 **device Endpoints**  
 1. Device Registration with examples  
-Endpoint: POST/devices  
-Description: Retrieve all device information
+**Endpoint:** POST/devices  
 ```json
 {
     "deviceId": "device001",
@@ -40,7 +39,6 @@ Description: Retrieve all device information
 2. Device Control with examples
 
 **Endpoint:** POST/devices/{deviceId}/control
-**Description:** Send control commmands to the devices
 
 ```json
 {
@@ -61,15 +59,16 @@ Description: Retrieve all device information
 ```
 3. Status Updates
 **Endpoint:** POST/devices/{deviceId}/status
-**Description:** update the status of a specific device
-```json
-Request Body Example 1
 
+Request Body Example 1
+```json
 {
     "status": "on",
     "timestamp": "2024-06-14T10:00:00Z"
 }
+```
 Request Body Example 2
+```json
 {
     "status": "off",
     "timestamp": "2024-06-14T11:00:00Z"
@@ -77,9 +76,10 @@ Request Body Example 2
 ```
 5. Device Query
 **Endpoint:** GET/devices/{deviceId}  
-**Description:** Retrieve information on a specific device 
-```json
+
+
 Example Response 1
+```json
 {
     "deviceId": "device001",
     "deviceType": "light",
@@ -87,7 +87,9 @@ Example Response 1
     "location": "Living Room",
     "status": "on"
 }
+```
 Example Response 2
+```json
 {
     "deviceId": "device002",
     "deviceType": "thermostat",
@@ -97,10 +99,11 @@ Example Response 2
 }
 ```
 6. Device List Query
-**Endpoint:** GET/devices.  
-**Description:** Retrieve all devices.  
-```json
+**Endpoint:** GET/devices.    
+
+
 Example Response
+```json
 [
     {
         "deviceId": "device001",
@@ -119,16 +122,18 @@ Example Response
 ]
 ```
 7. User Profile Query
-**Endpoint:** GET/users/{username}  
-**Description:** Retrieves user details. 
-```json 
+**Endpoint:** GET/users/{username}   
+
 Example Response 1
+```json
 {
     "username": "john_doe",
     "email": "john@example.com",
     "registeredDevices": ["device001"]
 }
+```
 Example Response 2
+```json
 {
     "username": "jane_smith",
     "email": "jane@example.com",
@@ -137,15 +142,18 @@ Example Response 2
 ```
 8. Update Device Information
 **Endpoint:** PUT/devices/{deviceId}  
-**Description:** Make edits to existing information of a specific device  
-```json
+
+
 Request Body Example 1
+```json
 {
     "deviceName": "Living Room Main Light",
     "location": "Living Room",
     "status": "off"
 }
+```
 Request Body Example 2
+```json
 {
     "deviceName": "Hallway Thermostat",
     "location": "Hallway",
@@ -154,20 +162,20 @@ Request Body Example 2
 ```
  9. Device Registration with Invalid Data
 
- **Endpoint:** POST/devices  
- **Description:** Adding new device information that is not enough of an invalid datatype.  
- ```json
+ **Endpoint:** POST/devices    
+ 
 
  Request Body Example 1 (Missing Fields)
-
+```json
  
 {
     "deviceId": "device003",
     "deviceType": "camera"
     // Missing deviceName, location, and status
 }
-
+```
  Request Body Example 2 (Invalid Data Types)
+```json
 {
     "deviceId": 1003,  // Should be a string
     "deviceType": "sensor",
@@ -179,15 +187,16 @@ Request Body Example 2
  10. Unauthorized Device Control Attempt
 
  **Endpoint:** POST/devices/{deviceId}/control.  
- **Description:** Sending unauthorized control commands
-```json
+
  Request Body Example
- 
+```json 
 {
     "command": "turn_off",
     "parameters": {}
 }
+```
  Response Example
+```json
 {
     "error": "Unauthorized",
     "message": "User does not have permission to control this device."
@@ -196,13 +205,16 @@ Request Body Example 2
  11. Device Status Update with Invalid Timestamp
 
  Endpoint: POST/devices/{deviceId}/status
-```json
+
  Request Body Example
+ ```json
 {
     "status": "on",
     "timestamp": "invalid-timestamp"
 }
+```
  Response Example
+```json
 {
     "error": "Invalid data",
     "message": "Timestamp is not in the correct format."
