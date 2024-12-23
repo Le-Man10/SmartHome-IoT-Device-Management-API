@@ -19,7 +19,7 @@
 **Endpoint:** POST/devices  
 ```json
 {
-    "deviceId": "device001",
+    "deviceId": 1001,
     "deviceType": "light",
     "deviceName": "Living Room Light",
     "location": "Living Room",
@@ -29,7 +29,7 @@
 
 ```json  
 {
-    "deviceId": "device002",
+    "deviceId": 1002,
     "deviceType": "thermostat",
     "deviceName": "Main Thermostat",
     "location": "Hallway",
@@ -81,7 +81,7 @@ Request Body Example 2
 Example Response 1
 ```json
 {
-    "deviceId": "device001",
+    "deviceId": 1001,
     "deviceType": "light",
     "deviceName": "Living Room Light",
     "location": "Living Room",
@@ -91,7 +91,7 @@ Example Response 1
 Example Response 2
 ```json
 {
-    "deviceId": "device002",
+    "deviceId": 1002,
     "deviceType": "thermostat",
     "deviceName": "Main Thermostat",
     "location": "Hallway",
@@ -106,14 +106,14 @@ Example Response
 ```json
 [
     {
-        "deviceId": "device001",
+        "deviceId": 1001,
         "deviceType": "light",
         "deviceName": "Living Room Light",
         "location": "Living Room",
         "status": "on"
     },
     {
-        "deviceId": "device002",
+        "deviceId": 1002,
         "deviceType": "thermostat",
         "deviceName": "Main Thermostat",
         "location": "Hallway",
@@ -169,7 +169,7 @@ Request Body Example 2
 ```json
  
 {
-    "deviceId": "device003",
+    "deviceId": 1000,
     "deviceType": "camera"
     // Missing deviceName, location, and status
 }
@@ -177,7 +177,7 @@ Request Body Example 2
  Request Body Example 2 (Invalid Data Types)
 ```json
 {
-    "deviceId": 1003,  // Should be a string
+    "deviceId": "01",  // Should be a Integer
     "deviceType": "sensor",
     "deviceName": "Garden Sensor",
     "location": "Garden",
@@ -198,7 +198,7 @@ Request Body Example 2
  Response Example
 ```json
 {
-    "error": "Unauthorized",
+    "error": 401,
     "message": "User does not have permission to control this device."
 }
 ```
@@ -216,7 +216,7 @@ Request Body Example 2
  Response Example
 ```json
 {
-    "error": "Invalid data",
+    "error": 400,
     "message": "Timestamp is not in the correct format."
 }
 ```
@@ -301,7 +301,7 @@ Request Body Example 2
 ```json
 
 {
-    "error": "Bad Request",
+    "error": 400,
     "message": "Invalid control command."
 }
 ```
@@ -320,7 +320,7 @@ Request Body Example 2
 ```json
 
 {
-    "error": "Bad Request",
+    "error": 400,
     "message": "Parameters are required for this command."
 }
 ```
@@ -375,7 +375,7 @@ Request Body Example 2
  Response Example
 ```json
  {
-    "error": "Conflict",
+    "error": 409,
     "message": "Username already exists."
 }
 ```
@@ -394,7 +394,7 @@ Request Body Example 2
  Response Example
  ```json
 {
-    "error": "Unauthorized",
+    "error": 401,
     "message": "Incorrect username or password."
 }
 ```
@@ -445,7 +445,7 @@ Request Body Example 2
 **Error handling format**
 ```json
  {
-    "error": "string",
+    "error": "integer",
     "message": "String"
 }
 ```
